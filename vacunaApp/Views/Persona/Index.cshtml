@@ -1,0 +1,48 @@
+﻿@model IEnumerable<vacunaApp.Models.Persona>
+@{
+    ViewBag.Title = "Personas";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Personas</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th ><small><strong>Nombre</strong></small></th>
+                        <th><small><strong>DNI</strong></small></th>
+                        <th><small><strong>Primera Dosis</strong></small></th>
+                        <th><small><strong>Segunda Dosis</strong></small></th>
+                        <th><small><strong>Tercera Dosis</strong></small></th>
+                        <th><small><strong>Vacunar</strong></small></th>
+                        <th><small><strong>Ficha</strong></small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var persona in Model)
+                     {
+                        <tr>
+                            <td><small>@persona.Nombre</small></td>
+                            <td><small>@persona.NumeroDocumento</small></td>
+                            <td><small>@persona.PrimeraDosis</small></td>
+                            <td><small>@persona.SegundaDosis</small></td>
+                            <td><small>@persona.TerceraDosis</small></td>
+                            <td><small>@Html.ActionLink("Aplicar", "Vacunar", new { id = persona.Id })</small></td>
+                            <td><small>@Html.ActionLink("Ver detalle", "Details", new { id = persona.Id })</small></td>
+                        </tr>
+                     }
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+    });
+</script>

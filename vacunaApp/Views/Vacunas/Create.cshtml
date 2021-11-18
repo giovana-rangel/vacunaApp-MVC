@@ -1,0 +1,49 @@
+﻿@model vacunaApp.Models.Vacunas
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Registro de Vacunas</h2>
+<br />
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.TipoVacuna, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TipoVacuna, new SelectList(ViewBag.list), "Seleccione el tipo de vacuna", htmlAttributes: new { @class = "form-control"})
+            @Html.ValidationMessageFor(model => model.TipoVacuna, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CentroMedico, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CentroMedico, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CentroMedico, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

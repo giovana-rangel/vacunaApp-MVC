@@ -1,0 +1,112 @@
+﻿@model vacunaApp.Models.Persona
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Ficha</h2>
+
+<div>
+    <h4>Datos Personales</h4>
+    <hr />
+    <div class="row">
+        <dl class="dl-horizontal col-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+                Tipo de Documento
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TipoDocumento)
+            </dd>
+
+            <dt>
+                Número de Documento
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumeroDocumento)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nacionalidad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nacionalidad)
+            </dd>
+
+            <dt>
+                Fecha de Nacimiento
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaNacimiento)
+            </dd>
+
+        </dl>
+
+        <dl class="dl-horizontal col-6">
+            <dt>
+                Teléfono
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.contacto.Telefono)
+            </dd>
+
+            <dt>
+                Teléfono de Emergencia
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.contacto.TelefonoEmergencia)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.contacto.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.contacto.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Direccion.Provincia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Direccion.Provincia)
+            </dd>
+
+            <dt>
+                Código Postal
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Direccion.CodigoPostal)
+            </dd>
+
+            <dt>
+                Dirección
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Direccion.Calle) @Html.DisplayFor(model => model.Direccion.NumeroCalle) @Html.DisplayFor(model => model.Direccion.Otro)
+            </dd>
+
+        </dl>
+    </div>
+    
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
