@@ -14,21 +14,21 @@ namespace vacunaApp.Services
     public class AplicacionesService
     {
         private DBContext dbContext;
-        private IMongoCollection<Aplicaciones> AplicacionesCollection;
+        private IMongoCollection<Aplicacion> AplicacionesCollection;
 
         public AplicacionesService()
         {
             dbContext = new DBContext();
-            AplicacionesCollection = dbContext.database.GetCollection<Aplicaciones>("Aplicaciones");
+            AplicacionesCollection = dbContext.database.GetCollection<Aplicacion>("Aplicaciones");
         }
 
-        public List<Aplicaciones> GetAplicaciones()
+        public List<Aplicacion> GetAplicaciones()
         {
-            List<Aplicaciones> aplicaciones = AplicacionesCollection.AsQueryable<Aplicaciones>().ToList();
+            List<Aplicacion> aplicaciones = AplicacionesCollection.AsQueryable<Aplicacion>().ToList();
             return aplicaciones;
         }
 
-        public void CrearAplicaciones(Aplicaciones Aplicaciones)
+        public void CrearAplicaciones(Aplicacion Aplicaciones)
         {
             AplicacionesCollection.InsertOne(Aplicaciones);
         }

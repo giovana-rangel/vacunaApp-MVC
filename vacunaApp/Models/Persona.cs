@@ -25,11 +25,7 @@ namespace vacunaApp.Models
         public Contacto contacto { get; set; }
         [BsonElement("Direccion")]
         public Direccion Direccion { get; set; }
-        [BsonElement("PrimeraDosis")]
-        public string PrimeraDosis { get; set; }
-        [BsonElement("SegundaDosis")]
-        public string SegundaDosis { get; set; }
-        [BsonElement("TerceraDosis")]
-        public string TerceraDosis { get; set; }
+        [BsonElement("DosisAplicadas")]
+        public List<Aplicacion> DosisAplicadas { get; set; } = new List<Aplicacion>();
     }
 }

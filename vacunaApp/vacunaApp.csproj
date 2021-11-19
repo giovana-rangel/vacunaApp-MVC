@@ -200,7 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Aplicaciones.cs" />
+    <Compile Include="Models\Aplicacion.cs" />
     <Compile Include="Models\Contacto.cs" />
     <Compile Include="Models\Direccion.cs" />
     <Compile Include="Models\Persona.cs" />
@@ -209,6 +209,7 @@
     <Compile Include="Services\AplicacionesService.cs" />
     <Compile Include="Services\PersonaService.cs" />
     <Compile Include="Services\VacunasService.cs" />
+    <Compile Include="ViewModels\AplicacionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -2154,8 +2155,8 @@
     <Content Include="Views\Persona\Create.cshtml" />
     <Content Include="Views\Vacunas\Index.cshtml" />
     <Content Include="Views\Vacunas\Create.cshtml" />
-    <Content Include="Views\Aplicaciones\RegistrarAplicacion.cshtml" />
     <Content Include="Views\Persona\Details.cshtml" />
+    <Content Include="Views\Aplicaciones\Vacunar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,15 +36,12 @@ namespace vacunaApp.Services
 
         public void CrearPersona(Persona persona) 
         {
-            persona.PrimeraDosis = "Sin Aplicar";
-            persona.SegundaDosis = "Sin Aplicar";
-            persona.TerceraDosis = "Sin Aplicar";
             personasCollection.InsertOne(persona);
         }
 
-        public void EditarPersona()
+        public void EditarPersona(Persona persona)
         {
-            // es un pluss
+            personasCollection.ReplaceOne(p => p.Id == persona.Id, persona);
         }
 
         public void EliminarPersona() { 

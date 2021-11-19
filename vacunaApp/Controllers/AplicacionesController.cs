@@ -7,100 +7,60 @@ using vacunaApp.App_Start;
 using MongoDB.Driver;
 using vacunaApp.Services;
 using vacunaApp.Models;
+using vacunaApp.ViewModels;
 
 namespace vacunaApp.Controllers
 {
     public class AplicacionesController : Controller
     {
-        public AplicacionesService aplicacionesService;
+        public PersonaService personaService;
+        public VacunasService vacunasService;
         public AplicacionesController()
         {
-            aplicacionesService = new AplicacionesService();
-        }
-        public ActionResult Index()
-        {
-            var aplicaciones = aplicacionesService.GetAplicaciones();
-            return View(aplicaciones);
+            personaService = new PersonaService();
+            vacunasService = new VacunasService();
+
         }
 
-        /*
-        // GET: Aplicaciones/Details/5
-        public ActionResult Details(int id)
+        //funciona como un Editar
+        public ActionResult Vacunar(string id)
         {
-            return View();
+            var model = new AplicacionViewModel();
+            Persona persona = personaService.GetPersona(id);
+            List<Vacunas> vacunas = vacunasService.GetVacunas();
+            
+            model.Persona = persona;
+            model.Vacunas = vacunas;
+
+            return View(model);
         }
 
-        // GET: Aplicaciones/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-        */
-
-        /*
-        // POST: Aplicaciones/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Vacunar(AplicacionViewModel model, string id)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    
-                    Aplicaciones Aplicaciones = new Aplicaciones();
+                Persona persona = personaService.GetPersona(id);
+                Aplicacion aplicacion = new Aplicacion();
+                aplicacion.Fecha = DateTime.Now;
+                var vacunaID = model.VacunaSeleccionada;
 
-                }
+                Vacunas vacuna = vacunasService.GetVacuna(vacunaID);
+                vacuna.Stock = vacuna.ActualizarStock();
+                aplicacion.Vacuna = vacuna.TipoVacuna;
 
-                return RedirectToAction("Index");
+                List<Aplicacion> aplicaciones = new List<Aplicacion>();
+                persona.DosisAplicadas = aplicaciones;
+                persona.DosisAplicadas.Add(aplicacion);
+ 
+                personaService.EditarPersona(persona);
+                vacunasService.EditarVacunas(vacuna);
+                return RedirectToAction("Index", "Persona");
             }
             catch
             {
                 return View();
             }
         }
-
-        // GET: Aplicaciones/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Aplicaciones/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Aplicaciones/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Aplicaciones/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
     }
 }

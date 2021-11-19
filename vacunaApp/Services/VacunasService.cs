@@ -41,9 +41,9 @@ namespace vacunaApp.Services
             vacunasCollection.InsertOne(vacunas);
         }
 
-        public void EditarVacunas()
+        public void EditarVacunas(Vacunas vacuna)
         {
-            // es un pluss
+            vacunasCollection.ReplaceOne(v => v.Id == vacuna.Id, vacuna);
         }
 
         public void EliminarVacunas()

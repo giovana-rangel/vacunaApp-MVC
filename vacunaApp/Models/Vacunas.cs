@@ -18,5 +18,11 @@ namespace vacunaApp.Models
         [BsonElement("CentroMedico")]
         public string CentroMedico { get; set; }
 
+
+        public int ActualizarStock()
+        {
+            this.Stock = this.Stock - 1;
+            return this.Stock;
+        }
     }
 }

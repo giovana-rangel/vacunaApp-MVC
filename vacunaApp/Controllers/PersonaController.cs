@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using vacunaApp.Services;
 using vacunaApp.Models;
 
+
 namespace vacunaApp.Controllers
 {
     public class PersonaController : Controller
@@ -48,7 +49,6 @@ namespace vacunaApp.Controllers
             }
         }
 
-  
         public ActionResult Details(string id)
         {
             var persona = personaService.GetPersona(id);
