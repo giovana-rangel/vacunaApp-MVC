@@ -21,8 +21,15 @@ namespace vacunaApp.Controllers
 
         public ActionResult Index()
         {
-            var vacunas = vacunasService.GetVacunas();
-            return View(vacunas);
+            try
+            {
+                var vacunas = vacunasService.GetVacunas();
+                return View(vacunas);
+            }
+            catch(Exception)
+            {
+                return ViewBag.Message = "Ocurrió un error al cargar las vacunas";
+            }
         }
 
         public ActionResult Create()
@@ -42,9 +49,9 @@ namespace vacunaApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Error: {e.Message}");
+                return ViewBag.Message = "Ocurrió un error al cargar las vacunas";
             }
         }
     }

@@ -3,6 +3,13 @@
     ViewBag.Title = "Personas";
 }
 
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Personas</h6>
@@ -23,40 +30,40 @@
                 </thead>
                 <tbody>
                     @foreach (var persona in Model)
-                     {
-                    <tr>
-                        <td><small>@persona.Nombre</small></td>
-                        <td><small>@persona.NumeroDocumento</small></td>
-                        @if (@persona.DosisAplicadas.ElementAtOrDefault(0) != null)
-                        {
-                            <td><small>@persona.DosisAplicadas.ElementAtOrDefault(0).Vacuna</small></td>
-                        }
-                        else
-                        {
-                            <td><small>"No administrada"</small></td>
-                        }
-                        @if (@persona.DosisAplicadas.ElementAtOrDefault(1) != null)
-                        {
-                            <td><small>@persona.DosisAplicadas.ElementAtOrDefault(1).Vacuna</small></td>
-                        }
-                        else
-                        {
-                            <td><small>"No administrada"</small></td>
-                        }
-                        @if (@persona.DosisAplicadas.ElementAtOrDefault(2) != null)
-                        {
-                            <td><small>@persona.DosisAplicadas.ElementAtOrDefault(2).Vacuna</small></td>
-                        }
-                        else
-                        {
-                            <td><small>"No administrada"</small></td>
-                        }
-                        <td><a class="nav-link" href="@Url.Action("Vacunar", "Aplicaciones", new { id = persona.Id })"><small> Aplicar</small></a></td>
-                        <td><small>@Html.ActionLink("Ver detalle", "Details", new { id = persona.Id })</small></td>
-                    </tr>
-                     }
+                    {
+                        <tr>
+                            <td><small>@persona.Nombre</small></td>
+                            <td><small>@persona.NumeroDocumento</small></td>
+                            @if (@persona.DosisAplicadas.ElementAtOrDefault(0) != null)
+                            {
+                                <td><small>@persona.DosisAplicadas.ElementAtOrDefault(0).Vacuna</small></td>
+                            }
+                            else
+                            {
+                                <td><small>"No administrada"</small></td>
+                            }
+                            @if (@persona.DosisAplicadas.ElementAtOrDefault(1) != null)
+                            {
+                                <td><small>@persona.DosisAplicadas.ElementAtOrDefault(1).Vacuna</small></td>
+                            }
+                            else
+                            {
+                                <td><small>"No administrada"</small></td>
+                            }
+                            @if (@persona.DosisAplicadas.ElementAtOrDefault(2) != null)
+                            {
+                                <td><small>@persona.DosisAplicadas.ElementAtOrDefault(2).Vacuna</small></td>
+                            }
+                            else
+                            {
+                                <td><small>"No administrada"</small></td>
+                            }
+                            <td><a class="nav-link" href="@Url.Action("Vacunar", "Aplicaciones", new { id = persona.Id })"><small> Aplicar</small></a></td>
+                            <td><small>@Html.ActionLink("Ver detalle", "Details", new { id = persona.Id })</small></td>
+                        </tr>
+                    }
                 </tbody>
-                
+
             </table>
         </div>
     </div>

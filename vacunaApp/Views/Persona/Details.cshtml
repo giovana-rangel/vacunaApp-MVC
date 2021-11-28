@@ -4,109 +4,126 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Ficha</h2>
+<h2>Ficha de Vacunación</h2>
+<hr />
 
 <div>
-    <h4>Datos Personales</h4>
-    <hr />
-    <div class="row">
-        <dl class="dl-horizontal col-6">
-            <dt>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Nombre)
-            </dd>
-
-            <dt>
-                Tipo de Documento
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.TipoDocumento)
-            </dd>
-
-            <dt>
-                Número de Documento
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.NumeroDocumento)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Nacionalidad)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Nacionalidad)
-            </dd>
-
-            <dt>
-                Fecha de Nacimiento
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.FechaNacimiento)
-            </dd>
-
-        </dl>
-
-        <dl class="dl-horizontal col-6">
-            <dt>
-                Teléfono
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.contacto.Telefono)
-            </dd>
-
-            <dt>
-                Teléfono de Emergencia
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.contacto.TelefonoEmergencia)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.contacto.Email)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.contacto.Email)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Direccion.Provincia)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Direccion.Provincia)
-            </dd>
-
-            <dt>
-                Código Postal
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Direccion.CodigoPostal)
-            </dd>
-
-            <dt>
-                Dirección
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Direccion.Calle) @Html.DisplayFor(model => model.Direccion.NumeroCalle) @Html.DisplayFor(model => model.Direccion.Otro)
-            </dd>
-
-        </dl>
-    </div>
     
+    
+    <div class="card p-2 mb-3">
+        <div class="alert mybackground text-light m-0"><h4>Datos Personales</h4></div>
+        <div class="card-body row">
+            <ul class="list-group col-md-6 col-sm-12">
+                <li class="list-group-item">
+                    <strong class="mycolor">Nombre Completo:</strong><br />
+                    @Html.DisplayFor(model => model.Nombre)
+                </li>
+
+                <li class="list-group-item">
+                    <strong class="mycolor">Tipo de Documento: </strong><br />
+                    @Html.DisplayFor(model => model.TipoDocumento)
+                </li>
+
+                <li class="list-group-item">
+                    <strong class="mycolor">Número de Documento: </strong><br />
+                    @Html.DisplayFor(model => model.NumeroDocumento)
+                </li>
+                <li class="list-group-item">
+                    <strong class="mycolor">Fecha de Nacimiento: </strong><br />
+                    @Html.DisplayFor(model => model.FechaNacimiento)
+                </li>
+
+            </ul>
+
+            <ul class="list-group col-md-6 col-sm-12 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Nacionalidad: </strong><br />
+                    @Html.DisplayFor(model => model.Nacionalidad)
+                </li>
+
+                <li class="list-group-item">
+                    <strong class="mycolor">Provincia: </strong><br />
+                    @Html.DisplayFor(model => model.Direccion.Provincia)
+                </li>
+
+                <li class="list-group-item">
+                    <strong class="mycolor">Código Postal</strong><br />
+                    @Html.DisplayFor(model => model.Direccion.CodigoPostal)
+                </li>
+
+                <li class="list-group-item" s>
+                    <strong class="mycolor">Dirección: </strong><br />
+                    @Html.DisplayFor(model => model.Direccion.Calle)
+                    @Html.DisplayFor(model => model.Direccion.NumeroCalle)
+                    @Html.DisplayFor(model => model.Direccion.Otro)
+                </li>
+            </ul>
+
+            <h5 class="text-secondary col-12">Contacto</h5>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Teléfono: </strong><br />
+                    @Html.DisplayFor(model => model.contacto.Telefono)
+                </li>
+            </ul>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Teléfono de Emergencia: </strong><br />
+                    @Html.DisplayFor(model => model.contacto.TelefonoEmergencia)
+                </li>
+            </ul>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Email: </strong><br />
+                    @Html.DisplayFor(model => model.contacto.Email)
+                </li>
+            </ul>
+
+            <div class="alert mybackground text-light col-12"><h4>Aplicaciones de Vacunas</h4></div>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Primera Dosis</strong><br />
+                    @if (Model.DosisAplicadas.ElementAtOrDefault(0) != null)
+                    {
+                        <span class="text-secondary">@Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(0).Fecha): </span>                
+                        @Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(0).Vacuna)
+                    }
+                    else
+                    {
+                        <p>"No administrada"</p>
+                    }
+                </li>
+            </ul>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Segunda Dosis:</strong><br />
+                    @if (Model.DosisAplicadas.ElementAtOrDefault(1) != null)
+                    {
+                        <span class="text-secondary">@Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(1).Fecha): </span> 
+                        @Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(1).Vacuna)
+                    }
+                    else
+                    {
+                        <p>"No administrada"</p>
+                    }
+                </li>
+            </ul>
+            <ul class="list-group col-md-4 mb-3">
+                <li class="list-group-item">
+                    <strong class="mycolor">Tercera Dosis:</strong><br />
+                    @if (Model.DosisAplicadas.ElementAtOrDefault(2) != null)
+                    {
+                        <span class="text-secondary">@Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(2).Fecha): </span>
+                        @Html.DisplayFor(model => model.DosisAplicadas.ElementAtOrDefault(2).Vacuna)
+                    }
+                    else
+                    {
+                        <p>"No administrada"</p>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div> 
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<strong>@Html.ActionLink("Atrás", "Index")</strong>

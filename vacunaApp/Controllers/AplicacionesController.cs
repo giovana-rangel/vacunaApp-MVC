@@ -15,24 +15,32 @@ namespace vacunaApp.Controllers
     {
         public PersonaService personaService;
         public VacunasService vacunasService;
+        public AplicacionesService aplicacionesService;
         public AplicacionesController()
         {
             personaService = new PersonaService();
             vacunasService = new VacunasService();
-
+            aplicacionesService = new AplicacionesService();
         }
 
-        //funciona como un Editar
         public ActionResult Vacunar(string id)
         {
-            var model = new AplicacionViewModel();
-            Persona persona = personaService.GetPersona(id);
-            List<Vacunas> vacunas = vacunasService.GetVacunas();
-            
-            model.Persona = persona;
-            model.Vacunas = vacunas;
+            try
+            {
+                var model = new AplicacionViewModel();
+                Persona persona = personaService.GetPersona(id);
+                List<Vacunas> vacunas = vacunasService.GetVacunas();
 
-            return View(model);
+                model.Persona = persona;
+                model.Vacunas = vacunas;
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Persona");
+            }
+            
         }
 
         [HttpPost]
@@ -44,23 +52,84 @@ namespace vacunaApp.Controllers
                 Aplicacion aplicacion = new Aplicacion();
                 aplicacion.Fecha = DateTime.Now;
                 var vacunaID = model.VacunaSeleccionada;
-
                 Vacunas vacuna = vacunasService.GetVacuna(vacunaID);
-                vacuna.Stock = vacuna.ActualizarStock();
                 aplicacion.Vacuna = vacuna.TipoVacuna;
 
-                List<Aplicacion> aplicaciones = new List<Aplicacion>();
-                persona.DosisAplicadas = aplicaciones;
-                persona.DosisAplicadas.Add(aplicacion);
- 
-                personaService.EditarPersona(persona);
-                vacunasService.EditarVacunas(vacuna);
+                if(persona.DosisAplicadas.Count() < 3)
+                {
+                    vacuna.Stock = vacuna.ActualizarStock();
+                    persona.DosisAplicadas.Add(aplicacion);
+                    personaService.EditarPersona(persona);
+                    vacunasService.EditarVacunas(vacuna);
+                    aplicacionesService.CrearAplicacion(aplicacion);
+                }
+                
                 return RedirectToAction("Index", "Persona");
             }
-            catch
+            catch(Exception)
             {
+                ViewBag.ErrorMessage = "Ocurrió un error al realizar la petición";
                 return View();
             }
+        }
+
+        public ActionResult Data()
+        {
+            try
+            {
+                List<Aplicacion> aplicaciones = aplicacionesService.GetAplicaciones();
+                List<Aplicacion> Pfizer = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Pfizer");
+                int pfizerCounter = Pfizer.Count();
+                List<Aplicacion> Sinopharm = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Sinopharm");
+                int sinopharmCounter = Sinopharm.Count();
+                List<Aplicacion> Sputnik = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Sputnik");
+                int sputnikCounter = Sputnik.Count();
+                List<Aplicacion> Astra = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Astra Zeneca");
+                int astraCounter = Astra.Count();
+
+                ViewBag.PfizerCounter = pfizerCounter;
+                ViewBag.SinopharmCounter = sinopharmCounter;
+                ViewBag.SputnikCounter = sputnikCounter;
+                ViewBag.AstraCounter = astraCounter;
+
+                return View(aplicaciones);
+            }
+            catch (Exception)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al realizar la petición";
+                return View();
+            } 
+        }
+
+        [HttpPost]
+        public ActionResult Data(DateTime hasta, DateTime desde)
+        {
+            try
+            {
+                List<Aplicacion> aplicaciones = aplicacionesService.GetAplicaciones();
+                List<Aplicacion> Pfizer = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Pfizer");
+                int pfizerCounter = Pfizer.Count();
+                List<Aplicacion> Sinopharm = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Sinopharm");
+                int sinopharmCounter = Sinopharm.Count();
+                List<Aplicacion> Sputnik = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Sputnik");
+                int sputnikCounter = Sputnik.Count();
+                List<Aplicacion> Astra = aplicacionesService.BuscarAplicacionesPorTipo(aplicaciones, "Astra Zeneca");
+                int astraCounter = Astra.Count();
+
+                List<Aplicacion> aplicacionesFiltradas = aplicacionesService.BuscarAplicacionesPorFecha(aplicaciones, desde, hasta);
+
+                ViewBag.PfizerCounter = pfizerCounter;
+                ViewBag.SinopharmCounter = sinopharmCounter;
+                ViewBag.SputnikCounter = sputnikCounter;
+                ViewBag.AstraCounter = astraCounter;
+
+                return View(aplicacionesFiltradas);
+            }
+            catch(Exception)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al realizar la petición";
+                return View();
+            }   
         }
     }
 }

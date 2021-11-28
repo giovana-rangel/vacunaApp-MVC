@@ -1,0 +1,46 @@
+﻿.counter {
+    background-color: #476DDA;
+    padding: 20px 0;
+    border-radius: 5px;
+}
+
+.count-title {
+    font-size: 40px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-2x {
+    margin: 0 auto;
+    float: none;
+    display: table;
+    color: #4ad1e5;
+}
+
+.mybackground {
+    background: #476DDA !important;
+    background-color: #476DDA !important;
+}
+
+.mycolor {
+    color: #476DDA !important;
+}
+
+.btn-primary:hover {
+    background: #3498db !important;
+}
+
+.jumbotron {
+    background-image: url(/Assets/Images/covidBg.png) !important;
+    background-size: cover !important;
+}

@@ -45,7 +45,7 @@ namespace vacunaApp.Services
         }
 
         public void EliminarPersona() { 
-            // es un pluss
+            // sin implementar
         }
     }
 }

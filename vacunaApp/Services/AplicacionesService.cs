@@ -28,9 +28,21 @@ namespace vacunaApp.Services
             return aplicaciones;
         }
 
-        public void CrearAplicaciones(Aplicacion Aplicaciones)
+        public void CrearAplicacion(Aplicacion Aplicacion)
         {
-            AplicacionesCollection.InsertOne(Aplicaciones);
+            AplicacionesCollection.InsertOne(Aplicacion);
+        }
+
+        public List<Aplicacion> BuscarAplicacionesPorTipo(List<Aplicacion> aplicaciones, string key)
+        {
+            List<Aplicacion> aplicacionesFiltradas = aplicaciones.FindAll(a => a.Vacuna == key);
+            return aplicacionesFiltradas;
+        }
+
+        public List<Aplicacion> BuscarAplicacionesPorFecha(List<Aplicacion> aplicaciones, DateTime desde, DateTime hasta)
+        {
+            List<Aplicacion> aplicacionesFiltradas = aplicaciones.FindAll(a => a.Fecha > desde && a.Fecha < hasta);
+            return aplicacionesFiltradas;
         }
     }
 }
