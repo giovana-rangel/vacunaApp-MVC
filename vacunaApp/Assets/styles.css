@@ -36,10 +36,6 @@
     color: #476DDA !important;
 }
 
-.btn-primary:hover {
-    background: #3498db !important;
-}
-
 .jumbotron {
     background-image: url(/Assets/Images/covidBg.png) !important;
     background-size: cover !important;

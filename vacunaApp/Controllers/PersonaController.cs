@@ -1,52 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using vacunaApp.App_Start;
-using MongoDB.Driver;
 using vacunaApp.Services;
 using vacunaApp.Models;
+using vacunaApp.Logs;
 
 
 namespace vacunaApp.Controllers
 {
+    [HandleError]
     public class PersonaController : Controller
     {
-        public PersonaService personaService;
+        private readonly PersonaService personaService;
         public PersonaController()
         {
             personaService = new PersonaService();
         }
+
+        readonly ILogger logger = FileLogger.Instance;
+
         public ActionResult Index()
-        {
+        {  
             try
-            {
+            {  
                 var personas = personaService.GetPersonas();
                 return View(personas);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return ViewBag.Message = "Ocurrió un error al cargar Personas";
+                logger.LogException(e);
+                ViewBag.Message("Ocurrió un error al cargar Personas");
+                return RedirectToAction("UnexpectedError", "Error");
             }   
         }
 
         public ActionResult Create()
         {
-            var list = new List<string>() { "Documento Nacional de Identidad", "Libreta Cívica", "Libreta de Enrolamiento" };
-            ViewBag.list = list;
-
-            var persona = new Persona();
-            persona.contacto = new Contacto();
-            persona.Direccion = new Direccion();
+            LoadDocumentDropdown();
+            var persona = new Persona
+            {
+                contacto = new Contacto(),
+                Direccion = new Direccion()
+            };
             return View(persona);
         }
 
         [HttpPost]
         public ActionResult Create(Persona persona)
         {
-            var list = new List<string>() { "Documento Nacional de Identidad", "Libreta Cívica", "Libreta de Enrolamiento" };
-            ViewBag.list = list;
+            LoadDocumentDropdown();
             if (ModelState.IsValid)
             {
                 try
@@ -62,15 +64,15 @@ namespace vacunaApp.Controllers
                     {
                         ViewBag.Message = $"Ya existe una persona registrada con el número de documento {persona.NumeroDocumento}";
                         return View(persona);
-                    }
-                    
+                    }  
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return ViewBag.Message = "Ocurrió un error al crear Persona";
+                    logger.LogException(e);
+                    ViewBag.Message = "Ocurrió un error al crear Personas";
+                    return RedirectToAction("UnexpectedError", "Error");
                 }
             }
-
             return View(persona);
         }
 
@@ -81,10 +83,21 @@ namespace vacunaApp.Controllers
                 var persona = personaService.GetPersona(id);
                 return View(persona);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return ViewBag.Message = "Ocurrió un error al cargar Persona";
+                logger.LogException(e);
+                ViewBag.Message = "Ocurrió un error al cargar Persona";
+                return RedirectToAction("UnexpectedError", "Error");
             }
         }
+
+        #region HELPERS
+        private void LoadDocumentDropdown()
+        {
+            var list = new List<string>() { "Documento Nacional de Identidad", "Libreta Cívica", "Libreta de Enrolamiento" };
+            ViewBag.list = list;
+        }
+
+        #endregion
     }
 }

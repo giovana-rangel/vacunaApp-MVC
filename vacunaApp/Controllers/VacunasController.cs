@@ -7,18 +7,20 @@ using vacunaApp.App_Start;
 using MongoDB.Driver;
 using vacunaApp.Services;
 using vacunaApp.Models;
+using vacunaApp.Logs;
 
 namespace vacunaApp.Controllers
 {
     public class VacunasController : Controller
     {
-        public VacunasService vacunasService;
+        private VacunasService vacunasService;
 
         public VacunasController()
         {
             vacunasService = new VacunasService();
         }
 
+        ILogger logger = FileLogger.Instance;
         public ActionResult Index()
         {
             try
@@ -26,16 +28,17 @@ namespace vacunaApp.Controllers
                 var vacunas = vacunasService.GetVacunas();
                 return View(vacunas);
             }
-            catch(Exception)
+            catch (Exception e)
             {
-                return ViewBag.Message = "Ocurrió un error al cargar las vacunas";
+                logger.LogException(e);
+                ViewBag.Message = "Ocurrió un error al cargar las vacunas";
+                return RedirectToAction("UnexpectedError", "Error");
             }
         }
 
         public ActionResult Create()
         {
-            var list = new List<string>() { "Sputnik", "Sinopharm", "Pfizer", "Astra Zeneca" };
-            ViewBag.list = list;
+            LoadVacunasDropdown();
             var vacunas = new Vacunas();
             return View(vacunas);
         }
@@ -46,13 +49,22 @@ namespace vacunaApp.Controllers
             try
             {
                 vacunasService.CrearVacunas(vacunas);
-
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return ViewBag.Message = "Ocurrió un error al cargar las vacunas";
+                logger.LogException(e);
+                ViewBag.Message = "Ocurrió un error al cargar las vacunas";
+                return RedirectToAction("UnexpectedError", "Error");
             }
         }
+
+        #region HELPERS
+        private void LoadVacunasDropdown()
+        {
+            var list = new List<string>() { "Sputnik", "Sinopharm", "Pfizer", "Astra Zeneca" };
+            ViewBag.list = list;
+        }
+        #endregion
     }
 }

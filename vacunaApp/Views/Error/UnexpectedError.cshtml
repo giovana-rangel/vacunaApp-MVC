@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "UnexpectedError";
+}
+
+<h2>Lo sentimos, algo salió mal</h2>
+
+@if(ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+<a class="text-light btn btn-md mybackground" href="@Url.Action("Index", "Home")">Back to Home</a>
+
